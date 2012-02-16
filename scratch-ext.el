@@ -1,8 +1,10 @@
-;;; -*- mode: emacs-lisp -*-
 ;;; scratch-ext.el --- Extensions for *scratch*
 
 ;; Copyright: (C) 2012 Kouhei Yanagita
 ;; Author: Kouhei Yanagita <yanagi@shakenbu.org>
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the MIT License.
 
 ;; Permission is hereby granted, free of charge, to any person obtaining
 ;; a copy of this software and associated documentation files (the
@@ -46,6 +48,10 @@
 ;; by customizing `scratch-ext-log-file-format'.
 ;;
 
+;;; Web Site:
+;;
+;; The repository on github: https://github.com/kyanagi/scratch-ext-el
+;;
 
 ;;; Code:
 
@@ -110,3 +116,4 @@ If nil, scratch buffer is not saved."
 (add-hook 'after-save-hook 'scratch-ext-create-scratch)
 
 (provide 'scratch-ext)
+;;; scratch-ext.el ends here.
