@@ -55,7 +55,13 @@
 
 ;;; Code:
 
-(defcustom scratch-ext-log-file-format "~/.scratch/%Y/%m/%d-%H%M%S"
+(defcustom scratch-ext-log-directory "~/.scratch/"
+  "Name of directory where log files go.
+If nil, scratch buffer is not saved."
+  :type 'string
+  :group 'scratch-ext)
+
+(defcustom scratch-ext-log-name-format "%Y/%m/%d-%H%M%S"
   "File name format of scratch log.
 Special characters of `format-time-string' are considered.
 If nil, scratch buffer is not saved."
@@ -68,9 +74,10 @@ If nil, scratch buffer is not saved."
   :group 'scratch-ext)
 
 (defun scratch-ext-save-scratch-to-file ()
-  (when scratch-ext-log-file-format
+  (when (and scratch-ext-log-directory scratch-ext-log-name-format)
     (let ((buffer (get-buffer "*scratch*"))
-          (file (expand-file-name (format-time-string scratch-ext-log-file-format (current-time))))
+          (file (expand-file-name (format-time-string scratch-ext-log-name-format (current-time))
+                                  scratch-ext-log-directory))
           text)
       (when buffer
         (with-current-buffer buffer
@@ -109,6 +116,26 @@ If nil, scratch buffer is not saved."
   (unless (get-buffer "*scratch*")
     (scratch-ext-initialize-buffer-as-scratch (get-buffer-create "*scratch*"))
     (message "New *scratch* is created.")))
+
+(defun scratch-ext-find-newest-log ()
+  "Return the name of a newest log file."
+  (catch 'found
+    (scratch-ext-find-newest-log-1 scratch-ext-log-directory)))
+
+(defun scratch-ext-find-newest-log-1 (dir)
+  (let ((entries (nreverse (directory-files dir nil "^[^.]"))))
+    (dolist (entry entries)
+      (setq entry (expand-file-name entry dir))
+      (if (file-directory-p entry)
+          (scratch-ext-find-newest-log-1 entry)
+        (throw 'found entry)))))
+
+(defun scratch-ext-insert-newest-log ()
+  (interactive)
+  (let ((log (scratch-ext-find-newest-log)))
+    (if log
+        (insert-file-contents log)
+      (message "Log of *scratch* not found."))))
 
 
 (add-hook 'kill-buffer-query-functions 'scratch-ext-kill-buffer-query-function)
