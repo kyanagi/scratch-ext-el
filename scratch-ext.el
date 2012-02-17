@@ -45,7 +45,11 @@
 ;;     (require 'scratch-ext)
 ;;
 ;; Log file goes to ~/.scratch directory by default. You can change this
-;; by customizing `scratch-ext-log-file-format'.
+;; by customizing `scratch-ext-log-directory'.
+;;
+;; You can bind a key for `scratch-ext-insert-newest-log' if you prefer:
+;;
+;;     (global-set-key (kbd "C-c i") 'scratch-ext-insert-newest-log)
 ;;
 
 ;;; Web Site:
