@@ -146,5 +146,12 @@ If nil, scratch buffer is not saved."
 (add-hook 'kill-emacs-hook 'scratch-ext-save-scratch-to-file)
 (add-hook 'after-save-hook 'scratch-ext-create-scratch)
 
+
+(defun scratch-ext-switch-to-scratch ()
+  "Make *scratch* buffer current and display it in selected window."
+  (interactive)
+  (switch-to-buffer "*scratch*"))
+
+
 (provide 'scratch-ext)
 ;;; scratch-ext.el ends here.
