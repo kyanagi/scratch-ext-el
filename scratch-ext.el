@@ -1,7 +1,8 @@
 ;;; scratch-ext.el --- Extensions for *scratch*
 
-;; Copyright: (C) 2012 Kouhei Yanagita
+;; Copyright: (C) 2012-2014 Kouhei Yanagita
 ;; Author: Kouhei Yanagita <yanagi@shakenbu.org>
+;; URL: https://github.com/kyanagi/scratch-ext-el
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the MIT License.
@@ -52,11 +53,6 @@
 ;;
 ;;     (global-set-key (kbd "C-c i") 'scratch-ext-insert-newest-log)
 ;;     (global-set-key (kbd "C-c r") 'scratch-ext-restore-last-scratch)
-;;
-
-;;; Web Site:
-;;
-;; The repository on github: https://github.com/kyanagi/scratch-ext-el
 ;;
 
 ;;; Code:
