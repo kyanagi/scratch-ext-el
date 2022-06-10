@@ -138,6 +138,7 @@ TEXT is contents of the *scratch* buffer."
           (scratch-ext-find-newest-log-1 entry)
         (throw 'found entry)))))
 
+;;;###autoload
 (defun scratch-ext-insert-newest-log ()
   "Insert the newest log of the *scratch* buffer."
   (interactive)
@@ -146,6 +147,7 @@ TEXT is contents of the *scratch* buffer."
         (insert-file-contents log)
       (message "Log of *scratch* not found."))))
 
+;;;###autoload
 (defun scratch-ext-restore-last-scratch ()
   "Restore the last *scratch* buffer to the current buffer."
   (interactive)
@@ -161,7 +163,7 @@ TEXT is contents of the *scratch* buffer."
 (add-hook 'kill-emacs-hook 'scratch-ext-save-scratch)
 (add-hook 'after-save-hook 'scratch-ext-create-scratch-if-necessary)
 
-
+;;;###autoload
 (defun scratch-ext-switch-to-scratch ()
   "Make *scratch* buffer current and display it in selected window."
   (interactive)
