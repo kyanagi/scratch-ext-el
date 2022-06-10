@@ -75,7 +75,7 @@ If nil, scratch buffer is not saved."
   :type 'string
   :group 'scratch-ext)
 
-(defun scratch-ext-save-scratch-to-file ()
+(defun scratch-ext-save-scratch ()
   "Save contents of the *scratch* buffer to a file."
   (when (and scratch-ext-log-directory scratch-ext-log-name-format)
     (let ((buffer (get-buffer "*scratch*"))
@@ -113,7 +113,7 @@ TEXT is contents of the *scratch* buffer."
   "If the current buffer is the *scratch* buffer, save and clear it."
   (if (string= "*scratch*" (buffer-name))
       (progn
-        (scratch-ext-save-scratch-to-file)
+        (scratch-ext-save-scratch)
         (scratch-ext-clear-scratch)
         nil)
     t))
@@ -158,7 +158,7 @@ TEXT is contents of the *scratch* buffer."
 
 
 (add-hook 'kill-buffer-query-functions 'scratch-ext-kill-buffer-query-function)
-(add-hook 'kill-emacs-hook 'scratch-ext-save-scratch-to-file)
+(add-hook 'kill-emacs-hook 'scratch-ext-save-scratch)
 (add-hook 'after-save-hook 'scratch-ext-create-scratch-if-necessary)
 
 
