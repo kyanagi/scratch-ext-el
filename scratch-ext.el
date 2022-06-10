@@ -118,7 +118,7 @@ TEXT is contents of the *scratch* buffer."
         nil)
     t))
 
-(defun scratch-ext-create-scratch ()
+(defun scratch-ext-create-scratch-if-necessary ()
   "Create the *scratch* buffer if not exist."
   (unless (get-buffer "*scratch*")
     (scratch-ext-initialize-buffer-as-scratch (get-buffer-create "*scratch*"))
@@ -159,7 +159,7 @@ TEXT is contents of the *scratch* buffer."
 
 (add-hook 'kill-buffer-query-functions 'scratch-ext-kill-buffer-query-function)
 (add-hook 'kill-emacs-hook 'scratch-ext-save-scratch-to-file)
-(add-hook 'after-save-hook 'scratch-ext-create-scratch)
+(add-hook 'after-save-hook 'scratch-ext-create-scratch-if-necessary)
 
 
 (defun scratch-ext-switch-to-scratch ()
