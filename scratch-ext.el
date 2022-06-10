@@ -71,11 +71,12 @@ If nil, scratch buffer is not saved."
   :group 'scratch-ext)
 
 (defcustom scratch-ext-text-ignore-regexp "\\`[ \t\r\n]*\\'"
-  "A regexp to which *scratch* buffer is not saved when its text is matched."
+  "A regexp to which the *scratch* buffer is not saved when its text is matched."
   :type 'string
   :group 'scratch-ext)
 
 (defun scratch-ext-save-scratch-to-file ()
+  "Save contents of the *scratch* buffer to a file."
   (when (and scratch-ext-log-directory scratch-ext-log-name-format)
     (let ((buffer (get-buffer "*scratch*"))
           (file (expand-file-name (format-time-string scratch-ext-log-name-format (current-time))
@@ -86,19 +87,21 @@ If nil, scratch buffer is not saved."
           (setq text (buffer-string))
           (unless (scratch-ext-scratch-text-to-be-discarded-p text)
             (make-directory (file-name-directory file) t)
-            (write-region nil nil file)
-            ))))))
+            (write-region nil nil file)))))))
 
 (defun scratch-ext-scratch-text-to-be-discarded-p (text)
-  "If this function returns Non-nil, *scratch* is not saved."
+  "Return non-nil if the *scratch* buffer is not to be saved.
+TEXT is contents of the *scratch* buffer."
   (or (string-match-p scratch-ext-text-ignore-regexp text)
       (string= text (or initial-scratch-message ""))))
 
 (defun scratch-ext-clear-scratch ()
+  "Clear the *scratch* buffer."
   (scratch-ext-initialize-buffer-as-scratch "*scratch*")
   (message "*scratch* is cleared."))
 
 (defun scratch-ext-initialize-buffer-as-scratch (buffer)
+  "Initialize BUFFER as the *scratch* buffer."
   (with-current-buffer buffer
     (funcall initial-major-mode)
     (erase-buffer)
@@ -107,6 +110,7 @@ If nil, scratch buffer is not saved."
         (insert initial-scratch-message))))
 
 (defun scratch-ext-kill-buffer-query-function ()
+  "If the current buffer is the *scratch* buffer, save and clear it."
   (if (string= "*scratch*" (buffer-name))
       (progn
         (scratch-ext-save-scratch-to-file)
@@ -115,16 +119,18 @@ If nil, scratch buffer is not saved."
     t))
 
 (defun scratch-ext-create-scratch ()
+  "Create the *scratch* buffer if not exist."
   (unless (get-buffer "*scratch*")
     (scratch-ext-initialize-buffer-as-scratch (get-buffer-create "*scratch*"))
     (message "New *scratch* is created.")))
 
 (defun scratch-ext-find-newest-log ()
-  "Return the name of a newest log file."
+  "Return the name of the newest log file."
   (catch 'found
     (scratch-ext-find-newest-log-1 scratch-ext-log-directory)))
 
 (defun scratch-ext-find-newest-log-1 (dir)
+  "Return the name of the newest log file in DIR."
   (let ((entries (nreverse (directory-files dir nil "^[^.]"))))
     (dolist (entry entries)
       (setq entry (expand-file-name entry dir))
@@ -133,6 +139,7 @@ If nil, scratch buffer is not saved."
         (throw 'found entry)))))
 
 (defun scratch-ext-insert-newest-log ()
+  "Insert the newest log of the *scratch* buffer."
   (interactive)
   (let ((log (scratch-ext-find-newest-log)))
     (if log
@@ -140,6 +147,7 @@ If nil, scratch buffer is not saved."
       (message "Log of *scratch* not found."))))
 
 (defun scratch-ext-restore-last-scratch ()
+  "Restore the last *scratch* buffer to the current buffer."
   (interactive)
   (let ((log (scratch-ext-find-newest-log)))
     (if log
