@@ -1,4 +1,4 @@
-;;; scratch-ext.el --- Extensions for *scratch*
+;;; scratch-ext.el --- Extensions for *scratch* -*- lexical-binding: t -*-
 
 ;; Copyright: (C) 2012-2014 Kouhei Yanagita
 ;; Author: Kouhei Yanagita <yanagi@shakenbu.org>
