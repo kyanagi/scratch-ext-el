@@ -22,7 +22,7 @@ Add following line to your start up file:
 ```
 
 Log file goes to ~/.scratch directory by default. You can change this
-by customizing `scratch-ext-log-directory'.
+by customizing `scratch-ext-log-directory`.
 
 You can bind a key for `scratch-ext-insert-newest-log` and
 `scratch-ext-restore-last-scratch` if you prefer:
