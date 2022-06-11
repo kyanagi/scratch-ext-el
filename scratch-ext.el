@@ -3,6 +3,8 @@
 ;; Copyright: (C) 2012-2014 Kouhei Yanagita
 ;; Author: Kouhei Yanagita <yanagi@shakenbu.org>
 ;; URL: https://github.com/kyanagi/scratch-ext-el
+;; Package-Requires: ((emacs "24.1"))
+;; Version: 0.1.0alpha
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the MIT License.
