@@ -59,7 +59,7 @@
 
 ;;; Code:
 
-(defcustom scratch-ext-log-directory "~/.scratch/"
+(defcustom scratch-ext-log-directory (locate-user-emacs-file "scratch" ".scratch")
   "Name of directory where log files go.
 If nil, scratch buffer is not saved."
   :type 'string
