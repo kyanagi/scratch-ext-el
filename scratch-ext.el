@@ -80,16 +80,20 @@ If nil, scratch buffer is not saved."
 (defun scratch-ext-save-scratch ()
   "Save contents of the *scratch* buffer to a file."
   (when (and scratch-ext-log-directory scratch-ext-log-name-format)
-    (let ((buffer (get-buffer "*scratch*"))
-          (file (expand-file-name (format-time-string scratch-ext-log-name-format (current-time))
-                                  scratch-ext-log-directory))
-          text)
-      (when buffer
-        (with-current-buffer buffer
-          (setq text (buffer-string))
-          (unless (scratch-ext--scratch-text-to-be-discarded-p text)
-            (make-directory (file-name-directory file) t)
-            (write-region nil nil file)))))))
+    (let ((file (expand-file-name (format-time-string scratch-ext-log-name-format (current-time))
+                                  scratch-ext-log-directory)))
+      (scratch-ext--save-scratch-to-file file))))
+
+(defun scratch-ext--save-scratch-to-file (filename)
+  "Save contents of the *scratch* buffer to FILENAME."
+  (let ((buffer (get-buffer "*scratch*"))
+        text)
+    (when buffer
+      (with-current-buffer buffer
+        (setq text (buffer-string))
+        (unless (scratch-ext--scratch-text-to-be-discarded-p text)
+          (make-directory (file-name-directory filename) t)
+          (write-region nil nil filename))))))
 
 (defun scratch-ext--scratch-text-to-be-discarded-p (text)
   "Return non-nil if the *scratch* buffer is not to be saved.
