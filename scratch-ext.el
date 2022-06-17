@@ -107,9 +107,8 @@ TEXT is contents of the *scratch* buffer."
   (with-current-buffer buffer
     (funcall initial-major-mode)
     (erase-buffer)
-    (if (and initial-scratch-message
-             (not inhibit-startup-screen))
-        (insert initial-scratch-message))))
+    (when initial-scratch-message
+      (insert initial-scratch-message))))
 
 (defun scratch-ext-kill-buffer-query-function ()
   "If the current buffer is the *scratch* buffer, save and clear it."
